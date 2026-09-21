@@ -1,0 +1,115 @@
+# ---------------------------------------------------------------------
+# Build artifacts
+# ---------------------------------------------------------------------
+
+# Object files, dependency files, and static libraries
+*.o
+*.a
+*.so
+*.so.*
+*.dylib
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ilk
+
+# Auto-generated dependency files (-MMD -MP)
+*.d
+
+# The project's primary library
+libasmbackend.a
+
+# Example binaries
+examples/hello
+examples/hello.exe
+
+# Test runners
+tests/golden/runner
+tests/golden/runner.exe
+tests/exec/runner
+tests/exec/runner.exe
+tests/diff/runner
+tests/diff/runner.exe
+
+# ---------------------------------------------------------------------
+# Generated output from running the pipeline
+# ---------------------------------------------------------------------
+
+# Assembly/object/executables the toolchain driver writes
+/tmp/asmbackend/
+out/
+build/
+
+# Golden-file update artifacts (only if you ever write these)
+*.s.actual
+
+# ---------------------------------------------------------------------
+# Editor and IDE
+# ---------------------------------------------------------------------
+
+# VSCode
+.vscode/
+!.vscode/extensions.json
+
+# CLion / JetBrains
+.idea/
+cmake-build-*/
+*.iml
+
+# Vim
+*.swp
+*.swo
+*~
+.*.sw?
+tags
+
+# Emacs
+*#
+.#*
+.\#*
+
+# ---------------------------------------------------------------------
+# OS cruft
+# ---------------------------------------------------------------------
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ---------------------------------------------------------------------
+# Toolchain / debug leftovers
+# ---------------------------------------------------------------------
+
+# coredumps
+core
+core.*
+vgcore.*
+
+# gdb
+.gdb_history
+
+# perf
+perf.data
+perf.data.old
+
+# ---------------------------------------------------------------------
+# Optional: keep directory placeholders
+# ---------------------------------------------------------------------
+
+!/.gitkeep
