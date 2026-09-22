@@ -1,32 +1,39 @@
-/* include/assembler.h */
 #ifndef ASSEMBLER_H
 #define ASSEMBLER_H
 
-
-#include <stddef.h>
 #include "target.h"
+
+/*
+ * Assemble-only driver.
+ *
+ *   - Write assembly text to a .s file.
+ *   - Run GNU as (GAS) on it to produce a .o file.
+ *   - Do not link.  That is the caller's job.
+ *
+ * `as` is discovered from PATH.  The caller can override it via
+ * toolchain_set_as() if they want a specific one (e.g. a cross-as
+ * called aarch64-linux-gnu-as).
+ */
 
 typedef struct {
     Target      target;
-    const char *assembler;   /* NULL = derive from triple, e.g. "<triple>-as" */
-    const char *linker;      /* NULL = derive from triple */
-    int         use_clang;   /* 1 = use clang driver (recommended) */
+    const char *as_program;   /* NULL -> "as" */
+    int         verbose;      /* 1 -> print the command line */
 } Toolchain;
 
-void   toolchain_init_clang(Toolchain *tc, Target t);
-void   toolchain_init_native(Toolchain *tc, Target t);
+void toolchain_init(Toolchain *tc, Target t);
+void toolchain_set_as(Toolchain *tc, const char *as_program);
+void toolchain_set_verbose(Toolchain *tc, int verbose);
 
-int    toolchain_assemble(const Toolchain *tc, const char *asm_path, const char *obj_path);
-int    toolchain_link(const Toolchain *tc, const char **objs, size_t nobjs,
-                      const char *out_path, const char **libs, size_t nlibs);
+/* Assemble asm_path -> obj_path using GAS.  Returns 0 on success. */
+int toolchain_assemble(const Toolchain *tc,
+                       const char *asm_path,
+                       const char *obj_path);
 
-/* All-in-one: write asm to work_dir/name.s, assemble, link.
-   Returns 0 on success. bin_path is written into `out_bin` (owned). */
-int    toolchain_build_executable(const Toolchain *tc,
-                                  const char *asm_src,
-                                  const char *work_dir,
-                                  const char *out_name,
-                                  const char **libs, size_t nlibs,
-                                  char **out_bin);
+/* Write asm_src to <work_dir>/<base>.s, assemble to <work_dir>/<base>.o. */
+int toolchain_assemble_source(const Toolchain *tc,
+                              const char *asm_src,
+                              const char *work_dir,
+                              const char *base);
 
 #endif
