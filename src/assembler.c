@@ -46,11 +46,11 @@ void toolchain_set_verbose(Toolchain *tc, int verbose) {
 
 static const char *default_as_for(Target t) {
     switch (t.arch) {
-    case ARCH_X86:     return "as";                               /* + --32 */
+    case ARCH_X86:     return "as";                          /* + --32 */
     case ARCH_X86_64:  return "as";
-    case ARCH_ARM:     return "armv7-alpine-linux-musleabihf-as";
-    case ARCH_ARM64:   return "aarch64-alpine-linux-musl-as";
-    case ARCH_RISCV64: return "riscv64-alpine-linux-musl-as";
+    case ARCH_ARM:     return "arm-linux-gnueabihf-as";     /* Debian/Ubuntu */
+    case ARCH_ARM64:   return "aarch64-linux-gnu-as";
+    case ARCH_RISCV64: return "riscv64-linux-gnu-as";
     }
     return "as";
 }
